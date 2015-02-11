@@ -60,12 +60,11 @@ public class ExerciseAddedActivity extends ActionBarActivity {
             /*
             TODO need to change this to used the adapter, not the exercise arraylist itself. Also fix the intents//intents are fixxxed
              */
-            finish();
+            finishActivity();
         }
     }
 
-    @Override
-    public void finish(){
+    public void finishActivity(){
         String exerciseAdded = "Added Exercise " + whatWasAdded;
         Toast.makeText(ExerciseAddedActivity.this, exerciseAdded, Toast.LENGTH_SHORT).show();
         Intent sendBackData = new Intent();
