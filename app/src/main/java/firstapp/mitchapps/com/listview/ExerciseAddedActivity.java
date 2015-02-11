@@ -1,5 +1,6 @@
 package firstapp.mitchapps.com.listview;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,18 +10,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Collection;
+import java.util.Collections;
+
 
 public class ExerciseAddedActivity extends ActionBarActivity {
 
     Button addExercise;
     EditText enterExercise;
+    String whatWasAdded;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_added);
 
-        Button addExercise = (Button)findViewById(R.id.exercise_added_button);
-        EditText enterExercise = (EditText)findViewById(R.id.enter_exercise_edit_text);
+        addExercise = (Button)findViewById(R.id.exercise_added_button);
+        enterExercise = (EditText)findViewById(R.id.enter_exercise_edit_text);
     }
 
 
@@ -47,14 +52,35 @@ public class ExerciseAddedActivity extends ActionBarActivity {
     }
 
     public void addExercise(View view) {
-       /* if (String.valueOf(enterExercise.getText()).equals(null)) {
-
-        } else {
-            String whatWasAdded = String.valueOf(enterExercise.getText());
-            String exerciseAdded = "Added Exercise " + whatWasAdded;
-            Toast.makeText(this, exerciseAdded, Toast.LENGTH_SHORT).show();
-            MainActivity.exercises.add(whatWasAdded);
-
-        }*/
+        /*
+        TODO this string isnt passing the correct data to the mainActivity
+         */
+        whatWasAdded = ExerciseAddedActivity.this.enterExercise.getText().toString(); //String.valueOf(findViewById(R.id.enter_exercise_edit_text));
+        if(whatWasAdded.equals("")){
+            Toast.makeText(ExerciseAddedActivity.this, "Enter an Exercise", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            /*
+            TODO need to change this to used the adapter, not the exercise arraylist itself. Also fix the intents
+             */
+            finish();
+        }
     }
+
+    @Override
+    public void finish(){
+        sendToArrayList(whatWasAdded);
+        String exerciseAdded = "Added Exercise " + whatWasAdded;
+        Toast.makeText(ExerciseAddedActivity.this, exerciseAdded, Toast.LENGTH_SHORT).show();
+        //Intent to send data back to mainactivity and put it in the list
+        Intent sendData = new Intent();
+        sendData.putExtra("exercise added", whatWasAdded);
+        Collections.sort(MainActivity.exercises);
+    }
+
+    public void sendToArrayList(String exercise){
+        MainActivity.exercises.add(exercise);
+    }
+
+
 }

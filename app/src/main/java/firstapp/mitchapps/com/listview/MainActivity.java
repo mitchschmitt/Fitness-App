@@ -1,8 +1,10 @@
 package firstapp.mitchapps.com.listview;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -31,7 +33,8 @@ public class MainActivity extends ActionBarActivity {
     public static ArrayList<String> exercises; //TODO if i want this to work with MyAdapter, it has to be a String[]
     public static Button addButton;
     public static EditText exerciseEntered;
-
+    public static ListAdapter theAdapter;
+    public Button browserButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,7 @@ public class MainActivity extends ActionBarActivity {
                 .withMargins(0, 0, 16, 16)
                 .create();*/
 
+        browserButton = (Button) findViewById(R.id.browser_button);
         addButton = (Button)findViewById(R.id.add_exercise_button);
 
         //exerciseEntered = (EditText)findViewById(R.id.enter_exercise);
@@ -56,7 +60,7 @@ public class MainActivity extends ActionBarActivity {
 
         Collections.sort(exercises);
 
-        final ListAdapter theAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,exercises);
+        theAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,exercises);
 
         ListView theList = (ListView)findViewById(R.id.the_list);
 
@@ -69,6 +73,7 @@ public class MainActivity extends ActionBarActivity {
                 Toast.makeText(MainActivity.this,exercisePicked,Toast.LENGTH_SHORT).show();
             }
         });
+
 
     }
 
@@ -87,21 +92,36 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        onPause();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            DialogFragment myFragment = new MyDialogFragment();
+
+            myFragment.show(getFragmentManager(), "theDialog");
+
+            return true;
+
+            // If exit was clicked close the app
+        } else if (id == R.id.action_exit) {
+            finish();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    public void reloadData(){
+    }
+
     public void addExerciseButtonClicked(View view) {
 
+
+        final int result = 1;
         Intent intent = new Intent(this, ExerciseAddedActivity.class);
         EditText editText = (EditText) findViewById(R.id.enter_exercise_edit_text);
         Button enterExercise = (Button) findViewById(R.id.add_exercise_button);
         //intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
+        startActivityForResult(intent, result);
         /*exercises.add(String.valueOf(exerciseEntered.getText()));
         String whatWasAdded = String.valueOf(exerciseEntered.getText());
         String exerciseAdded = "Added Exercise " + whatWasAdded + " " + exercises.size();
@@ -110,5 +130,15 @@ public class MainActivity extends ActionBarActivity {
 
     public void showWorkout(View view) {
         //TODO when a user clicks on list item, bring them to workout page.
+    }
+
+    /*
+    just wanted to see how to open a browser using intents. heh.
+     */
+    public void openBrowser(View view) {
+        String url = "http://www.google.com";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 }

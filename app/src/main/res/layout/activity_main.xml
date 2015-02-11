@@ -12,6 +12,8 @@
 
 
 
+
+
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -19,6 +21,11 @@
             android:id="@+id/the_list">
         </ListView>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center">
         <Button
             android:padding="15dp"
             android:text="@string/submit_button_text"
@@ -27,6 +34,16 @@
             android:id="@+id/add_exercise_button"
             android:onClick="addExerciseButtonClicked"/>
         <!--TODO turn this button into a FAB -->
+
+    <Button
+        android:padding="15dp"
+        android:text="Open Browser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="openBrowser"
+        android:id="@+id/browser_button"/>
+
+    </LinearLayout>
 
 
     <!--<EditText
