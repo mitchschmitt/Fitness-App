@@ -52,16 +52,13 @@ public class ExerciseAddedActivity extends ActionBarActivity {
     }
 
     public void addExercise(View view) {
-        /*
-        TODO this string isnt passing the correct data to the mainActivity
-         */
-        whatWasAdded = ExerciseAddedActivity.this.enterExercise.getText().toString(); //String.valueOf(findViewById(R.id.enter_exercise_edit_text));
+        whatWasAdded = ExerciseAddedActivity.this.enterExercise.getText().toString();
         if(whatWasAdded.equals("")){
             Toast.makeText(ExerciseAddedActivity.this, "Enter an Exercise", Toast.LENGTH_SHORT).show();
         }
         else {
             /*
-            TODO need to change this to used the adapter, not the exercise arraylist itself. Also fix the intents
+            TODO need to change this to used the adapter, not the exercise arraylist itself. Also fix the intents//intents are fixxxed
              */
             finish();
         }
@@ -69,13 +66,12 @@ public class ExerciseAddedActivity extends ActionBarActivity {
 
     @Override
     public void finish(){
-        sendToArrayList(whatWasAdded);
         String exerciseAdded = "Added Exercise " + whatWasAdded;
         Toast.makeText(ExerciseAddedActivity.this, exerciseAdded, Toast.LENGTH_SHORT).show();
-        //Intent to send data back to mainactivity and put it in the list
-        Intent sendData = new Intent();
-        sendData.putExtra("exercise added", whatWasAdded);
-        Collections.sort(MainActivity.exercises);
+        Intent sendBackData = new Intent();
+        sendBackData.putExtra("exercise added", whatWasAdded);
+        setResult(2, sendBackData);
+        finish();
     }
 
     public void sendToArrayList(String exercise){

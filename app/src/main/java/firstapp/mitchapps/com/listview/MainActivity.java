@@ -113,19 +113,24 @@ public class MainActivity extends ActionBarActivity {
     public void reloadData(){
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if(requestCode==2)
+        {
+            String message=data.getStringExtra("exercise added");
+            exercises.add(message);
+            Collections.sort(exercises);
+        }
+    }
+
     public void addExerciseButtonClicked(View view) {
-
-
-        final int result = 1;
         Intent intent = new Intent(this, ExerciseAddedActivity.class);
-        EditText editText = (EditText) findViewById(R.id.enter_exercise_edit_text);
-        Button enterExercise = (Button) findViewById(R.id.add_exercise_button);
-        //intent.putExtra(EXTRA_MESSAGE, message);
-        startActivityForResult(intent, result);
-        /*exercises.add(String.valueOf(exerciseEntered.getText()));
-        String whatWasAdded = String.valueOf(exerciseEntered.getText());
-        String exerciseAdded = "Added Exercise " + whatWasAdded + " " + exercises.size();
-        Toast.makeText(this,exerciseAdded,Toast.LENGTH_SHORT).show();*/
+       /*ditText editText = (EditText) findViewById(R.id.enter_exercise_edit_text);
+        Button enterExercise = (Button) findViewById(R.id.add_exercise_button);*/
+        startActivityForResult(intent, 2);
     }
 
     public void showWorkout(View view) {
