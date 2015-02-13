@@ -10,15 +10,14 @@ public class Set {
     public int weight;
     public boolean timed;
     public Timer timer;
-    
+    public int reps;
+
     public Set(int reps, int weight, boolean timed, Timer timer) {
         this.reps = reps;
         this.weight = weight;
         this.timed = timed;
         this.timer = timer;
     }
-
-    public int reps;
 
     public int getWeight() {
         return weight;

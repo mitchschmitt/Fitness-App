@@ -30,41 +30,37 @@ import java.util.Collections;
 
 public class MainActivity extends ActionBarActivity {
 
-    public static ArrayList<String> exercises; //TODO if i want this to work with MyAdapter, it has to be a String[]
+    public static ArrayList<String> exercises; //TODO make this work with ArrayList<Exercise> with MyAdapter
     public static Button addButton;
     public static EditText exerciseEntered;
     public static ListAdapter theAdapter;
     public Button browserButton;
+    public ArrayList<Exercise> exerciseArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        /*Drawable FAB = getResources().getDrawable(R.drawable.fab);
-        FloatingActionButton fabButton = new FloatingActionButton.Builder(this)
-                .withDrawable(R.id.fab)
-                .withButtonColor(Color.WHITE)
-                .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
-                .withMargins(0, 0, 16, 16)
-                .create();*/
-
         browserButton = (Button) findViewById(R.id.browser_button);
         addButton = (Button)findViewById(R.id.add_exercise_button);
 
-        //exerciseEntered = (EditText)findViewById(R.id.enter_exercise);
-
-        exercises = new ArrayList<>(Arrays.asList("Bench Press", "Dips",
+        /*exercises = new ArrayList<>(Arrays.asList("Bench Press", "Dips",
                  "Shoulder Press", "Bicep Curl", "Hammer Curl", "Tricep Extension",
-                 "Cable Row", "Lat Pulldown", "Bent Over Row", "Dumbbell Squat"));
+                 "Cable Row", "Lat Pulldown", "Bent Over Row", "Dumbbell Squat"));*/
 
-        Collections.sort(exercises);
+        //Collections.sort(exercises);
+
+        exerciseArray = new ArrayList<Exercise>();//TODO
+
+        MyAdapter mAdapter = new MyAdapter(this, R.layout.row_layout_2, exerciseArray);//TODO
 
         theAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,exercises);
 
         ListView theList = (ListView)findViewById(R.id.the_list);
 
-        theList.setAdapter(theAdapter);
+
+        theList.setAdapter(mAdapter);
+        //theList.setAdapter(theAdapter);
 
         theList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -96,9 +92,7 @@ public class MainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             DialogFragment myFragment = new MyDialogFragment();
-
             myFragment.show(getFragmentManager(), "theDialog");
-
             return true;
 
             // If exit was clicked close the app
@@ -117,12 +111,13 @@ public class MainActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        // check if the request code is same as what is passed  here it is 2
-        if(requestCode==2)
-        {
-            String message=data.getStringExtra("exercise added");
-            exercises.add(message);
-            Collections.sort(exercises);
+        if(data!=null) {//OMFG wtf this was such an annoying bug. CHECK DATA TO SEE IF ITS NULL OR BACK BUTTON DUN NOT WORX
+            // check if the request code is same as what is passed  here it is 2
+            if (requestCode == 2) {
+                String message = data.getStringExtra("exercise added");
+                exercises.add(message);
+                Collections.sort(exercises);
+            }
         }
     }
 

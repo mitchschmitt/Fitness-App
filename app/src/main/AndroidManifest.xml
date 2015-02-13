@@ -22,7 +22,8 @@
         </activity>
         <activity
             android:name=".ExerciseAddedActivity"
-            android:label="@string/title_activity_exercise_added" >
+            android:label="@string/title_activity_exercise_added"
+            android:parentActivityName=".MainActivity">
         </activity>
     </application>
 

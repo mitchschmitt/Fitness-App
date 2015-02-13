@@ -10,17 +10,22 @@
     tools:context="firstapp.mitchapps.com.listview.ExerciseAddedActivity">
 
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/enter_exercise_edit_text"/>
+        android:orientation="horizontal">
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/enter_exercise_title"
+        android:layout_weight="2"/>
    <Button
        android:text="@string/add_exercise_button"
-       android:layout_width="match_parent"
+       android:layout_width="148dp"
        android:layout_height="wrap_content"
        android:id="@+id/exercise_added_button"
-       android:onClick="addExercise"
-       />
+       android:onClick="addExercise" />
+    </LinearLayout>
 
 
 

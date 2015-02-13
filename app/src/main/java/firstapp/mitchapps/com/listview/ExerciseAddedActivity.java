@@ -1,8 +1,10 @@
 package firstapp.mitchapps.com.listview;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,13 +21,16 @@ public class ExerciseAddedActivity extends ActionBarActivity {
     Button addExercise;
     EditText enterExercise;
     String whatWasAdded;
-    @Override
+    //ActionBar actionBar;
+    @Override//TODO fix this to make it take Exercise object as input
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_added);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         addExercise = (Button)findViewById(R.id.exercise_added_button);
-        enterExercise = (EditText)findViewById(R.id.enter_exercise_edit_text);
+        enterExercise = (EditText)findViewById(R.id.enter_exercise_title);
     }
 
 
@@ -48,6 +53,7 @@ public class ExerciseAddedActivity extends ActionBarActivity {
             return true;
         }
 
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -58,7 +64,7 @@ public class ExerciseAddedActivity extends ActionBarActivity {
         }
         else {
             /*
-            TODO need to change this to used the adapter, not the exercise arraylist itself. Also fix the intents//intents are fixxxed
+            TODO need to change this to used the adapter, not the exercise arraylist itself. the intents//intents are fixxxed
              */
             finishActivity();
         }
@@ -72,10 +78,5 @@ public class ExerciseAddedActivity extends ActionBarActivity {
         setResult(2, sendBackData);
         finish();
     }
-
-    public void sendToArrayList(String exercise){
-        MainActivity.exercises.add(exercise);
-    }
-
 
 }
